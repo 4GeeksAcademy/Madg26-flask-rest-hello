@@ -18,7 +18,7 @@ class Instagram_media(db.Model):
     type: Mapped[str] = mapped_column(String(50))
     url: Mapped[str] = mapped_column(String(50), unique = True)
     post_id: Mapped[int] = mapped_column(ForeignKey('instagram_post.id'))
-    
+    post: Mapped['Instagram_post'] = relationship(back_populates = 'media')
 class Instagram_comment(db.Model):
     _tablename_ = 'instagram_comment'
     id: Mapped[int] = mapped_column(primary_key = True)
@@ -33,6 +33,7 @@ class Instagram_post(db.Model):
     id: Mapped[int] = mapped_column(primary_key = True)
     user_id:  Mapped[int] = mapped_column(ForeignKey('instagram_user.id'))
     comentarios: Mapped[list['Instagram_comment']] = relationship(back_populates = 'post') 
+    media: Mapped['Instagram_media'] = relationship(back_populates = 'post')
 
 class Instagram_followers(db.Model):
     _tablename_ = 'instagram_followers'
